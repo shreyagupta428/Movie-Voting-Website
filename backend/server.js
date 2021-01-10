@@ -2,11 +2,13 @@ const express=require('express')
 const mongoose=require('mongoose')
 const authrouter=require('./routes/auth')
 const {ATLAS_URI}=require('./key')
+const cors=require('cors')
 
 const app=express();
 
 const port=5000;
 app.use(express.json())
+app.use(cors());
 
 const uri=ATLAS_URI;
 mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true})
