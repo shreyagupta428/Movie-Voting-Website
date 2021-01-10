@@ -17,13 +17,13 @@ router.get('/',requireLogin,(req,res)=>{
 router.post('/signup',(req,res)=>{
     const {name,email,password} = req.body 
     if(!email || !password || !name)
-    return res.status(422).json({error:"Please add all the fields"})
+    return res.json({error:"Please add all the fields"})
     else
     {
         User.findOne({email:email})
         .then((savedUser)=>{
             if(savedUser)
-            return res.status(422).json({error:"User already exits with that email"})
+            return res.json({error:"User already exits with that email"})
             else
             {
                 bcrypt.hash(password,12)
@@ -51,13 +51,13 @@ router.post('/signup',(req,res)=>{
 router.post('/signin',(req,res)=>{
     const {email,password}=req.body;
     if(!email || !password){
-        return res.status(422).json({error:"Please provide email and password"})
+        return res.json({error:"Please provide email and password"})
     }
     else{
         User.findOne({email:email})
         .then(savedUser=>{
             if(!savedUser)
-            return res.status(422).json({error:"invalid email or password"})
+            return res.json({error:"invalid email or password"})
             else{
                 bcrypt.compare(password,savedUser.password)
                 .then(doMatch=>{
@@ -68,7 +68,7 @@ router.post('/signin',(req,res)=>{
                           res.json({token})
                     }
                     else
-                    return res.status(422).json({error:"invalid email or password"})
+                    return res.json({error:"invalid email or password"})
                 })
                 .catch(err=>console.log(err))
             }
