@@ -30,8 +30,11 @@ const SignIn=()=>{
             if(res.data.error)
             M.toast({html: res.data.error,classes:"#c62828 red darken-3"})
             else{
+                localStorage.setItem("jwt",res.data.token)
+                localStorage.setItem("user",JSON.stringify(res.data.user))
+
                 M.toast({html:"Signed in successfully",classes:"#43a047 green darken-1"})
-                history.push('/')
+                history.push('/home')
             }
         })
         .catch(err=>console.log(err))
