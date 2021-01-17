@@ -1,6 +1,7 @@
 const express=require('express')
 const mongoose=require('mongoose')
 const authrouter=require('./routes/auth')
+const movierouter=require('./routes/movie')
 const {ATLAS_URI}=require('./key')
 const cors=require('cors')
 
@@ -11,7 +12,7 @@ app.use(express.json())
 app.use(cors());
 
 const uri=ATLAS_URI;
-mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true})
+mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true, useUnifiedTopology: true })
 
 const connection=mongoose.connection;
 connection.once('open',()=>{
@@ -19,6 +20,7 @@ connection.once('open',()=>{
 })
 
 app.use('/',authrouter)
+app.use('/movie',movierouter)
 
 app.listen(port,()=>{
     console.log("Server is running");

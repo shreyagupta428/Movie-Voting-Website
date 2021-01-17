@@ -1,12 +1,34 @@
 import React from 'react'
 import { Card, Avatar, Col, Typography, Row } from 'antd';
 import { IMAGE_BASE_URL } from '../../constants/config';
-
+import axios from 'axios'
 function GridCards(props) {
 
-    let { actor, key, image, movieId, movieName, characterName } = props
+    let { actor, key, image, movieId, movieName, characterName,movie_overview,movie_lang,movie_releasedate } = props
     const POSTER_SIZE = "w154";
-
+    const handleclick=()=>{
+        
+        const movie={
+            title:movieName,
+            language:movie_lang,
+            overview:movie_overview,
+            movieId:movieId
+            //release_date:movie_releasedate
+        }
+        console.log(movie)
+        axios.post('http://localhost:5000/movie/nominate',movie,
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+localStorage.getItem("jwt")
+            }
+        }
+        )
+        .then(res=>{
+            console.log(res)
+        })
+        .catch(err=>console.log(err))
+    }
     if (actor) {
         return (
             <Col key={key} lg={6} md={8} xs={200}>
@@ -23,6 +45,7 @@ function GridCards(props) {
                         <img style={{ width: '100%', height: '320px' }} alt={movieName} src={image} />
                         {/* <p>{movieName}</p> */}
                     </a>
+                    <button onClick={handleclick}>Nominate</button>
                 </div>
             </Col>
         )

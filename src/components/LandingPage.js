@@ -70,7 +70,6 @@ function LandingPage(props){
         </MDBCol>
 
             <div style={{ width: '20%', margin: '1rem auto' }}>
-
                 <Title level={2} > Movies by latest </Title>
                 <hr />
                 <Row gutter={[16, 16]}>
@@ -82,14 +81,14 @@ function LandingPage(props){
                                     : null}
                                 movieId={movie.id}
                                 movieName={movie.original_title}
+                                movie_overview={movie.overview}
+                                movie_lang={movie.original_language}
+                                movie_releasedate={movies.release_date}
                             />
                         </React.Fragment>
                     ))}
                 </Row>
-                
-
                 <br />
-           
             </div>
 
     </div>

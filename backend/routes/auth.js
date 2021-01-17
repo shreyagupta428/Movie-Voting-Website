@@ -8,11 +8,10 @@ let User=require('../models/user')
 const requireLogin= require('../middleware/requireLogin')
 
 
-
-router.get('/',requireLogin,(req,res)=>{
-    console.log("HII")
-    res.send("hello")
-})
+// router.get('/home',requireLogin,(req,res)=>{
+//     console.log("HII")
+//     res.send("hello")
+// })
 
 router.post('/signup',(req,res)=>{
     const {name,email,password} = req.body 
@@ -65,7 +64,8 @@ router.post('/signin',(req,res)=>{
                     {
                           // return res.json({error:"signed in successfully"})
                           const token=jwt.sign({_id:savedUser._id},JWT_SECRET_KEY)
-                          res.json({token})
+                          const {_id,email,name}=savedUser
+                          res.json({token,user:{_id,name,email}})
                     }
                     else
                     return res.json({error:"invalid email or password"})
@@ -76,13 +76,6 @@ router.post('/signin',(req,res)=>{
         .catch(err=>console.log(err))
     }
 })
-
-
-
-
-
-
-
 
 
 
