@@ -2,6 +2,8 @@ import React from 'react'
 import { Card, Avatar, Col, Typography, Row } from 'antd';
 import { IMAGE_BASE_URL } from '../../constants/config';
 import axios from 'axios'
+import M from 'materialize-css'
+
 function GridCards(props) {
 
     let { actor, key, image, movieId, movieName, characterName,movie_overview,movie_lang,movie_releasedate } = props
@@ -12,7 +14,8 @@ function GridCards(props) {
             title:movieName,
             language:movie_lang,
             overview:movie_overview,
-            movieId:movieId
+            movieId:movieId,
+            image:image
             //release_date:movie_releasedate
         }
         console.log(movie)
@@ -25,7 +28,11 @@ function GridCards(props) {
         }
         )
         .then(res=>{
-            console.log(res)
+            //console.log(res)
+            if(res.data.error)
+            M.toast({html: res.data.error,classes:"#c62828 red darken-3"})
+            else
+            M.toast({html: res.data.message,classes:"#43a047 green darken-1"})
         })
         .catch(err=>console.log(err))
     }
