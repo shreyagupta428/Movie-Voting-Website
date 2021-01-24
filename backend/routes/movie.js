@@ -5,15 +5,37 @@ const requireLogin= require('../middleware/requireLogin')
 let Movie=require('../models/movie')
 
 
-router.post("/nominate",requireLogin,(req,res)=>{
+router.post("/nominate",requireLogin,(req,res,next)=>{
     console.log(req.user)
     console.log(req.body)
-    const {title,language,overview,movieId}=req.body
-    console.log(title,language,overview,movieId)
+    const {title,language,overview,movieId,image}=req.body
+    console.log(title,language,overview,movieId,image)
     Movie.findOne({movieId:movieId})
     .then((savedMovie)=>{
         if(savedMovie)
-        return res.json({error:"Movie is already in database"})
+        {
+            
+            let y=0
+            savedMovie.nominatedby.map(x=>{
+                
+                    if(JSON.stringify(x)===JSON.stringify(req.user._id))
+                    {
+                        y=-1
+                    }
+                }
+            )
+            if(y===-1)
+            {
+                return res.json({error:"You have already nominated this movie"})
+            }
+            
+            savedMovie.nominatedby=[...savedMovie.nominatedby,req.user._id]
+            savedMovie.save()
+            .then(movie=>{
+                res.json({message:"Nomination made!"})
+            })
+            .catch(err=>console.log(err))    
+        }
         else
         {
             
@@ -22,11 +44,12 @@ router.post("/nominate",requireLogin,(req,res)=>{
                     language,
                     overview,
                     movieId,
-                    nominatedby:req.user._id
+                    nominatedby:req.user._id,
+                    image
                 })
                 movie.save()
                 .then(movie=>{
-                    res.json({message:"saved successfully"})
+                    res.json({message:"Nomination made!"})
                 })
                 .catch(err=>console.log(err))
             
@@ -38,4 +61,17 @@ router.post("/nominate",requireLogin,(req,res)=>{
     })
 })
 
+router.get("/mypost",requireLogin,(req,res)=>{
+   
+ Movie.find({nominatedby:req.user._id})
+ .populate("nominatedby","_id name")
+ .then(myPost=>{
+     res.send({myPost})
+ })
+})
+
+router.get("/leaderboard",(req,res)=>{
+    Movie.find()
+    .then(movies=>res.send({movies}))
+})
 module.exports=router

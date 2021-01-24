@@ -12,6 +12,8 @@ const NavBar = ()=>{
             <li><Link to="/signup">SignUp</Link></li>
             <li><Link to="/signin">SignIn</Link></li>
             <li><Link to="/profile">Profile</Link></li>
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/leaderboard">Leaderboard</Link></li>
           </ul>
         </div>
       </nav>

@@ -7,6 +7,7 @@ import GridCard from './Sections/GridCards'
 import { MDBCol, MDBIcon } from "mdbreact";
 
 
+
 const { Title } = Typography;
 
 function LandingPage(props){
@@ -30,6 +31,8 @@ function LandingPage(props){
       .catch(err=>console.log(err))
   
   },[])
+
+
   const handleChange=(e)=>{
     setSearch(e.target.value)
  
@@ -46,6 +49,8 @@ function LandingPage(props){
        })
        .catch(err=>console.log(err))
    }
+
+
         return(
             <div style={{ width: '100%', margin: '0' }}>
             {MainMovieImage &&
@@ -56,6 +61,8 @@ function LandingPage(props){
                 />
 
             }
+
+          {/* search bar   */}
           <MDBCol md="6">
             <div style={{marginLeft:600,marginTop:10}}>
           <div className="input-group md-form form-sm form-1 pl-0">
@@ -68,6 +75,9 @@ function LandingPage(props){
           </div>
          </div>
         </MDBCol>
+
+
+       
 
             <div style={{ width: '20%', margin: '1rem auto' }}>
                 <Title level={2} > Movies by latest </Title>
@@ -97,3 +107,4 @@ function LandingPage(props){
     
 }
  export default LandingPage;
+
