@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "../App.css";
 import M from "materialize-css";
+import { UserContext } from "../App";
 
 const SignUp = () => {
   const history = useHistory();
-  if (localStorage.getItem("jwt")) history.push("/home");
+  const { state, dispatch } = useContext(UserContext);
+  if (state) history.push("/home");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");

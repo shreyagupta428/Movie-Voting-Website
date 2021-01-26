@@ -1,43 +1,62 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../App";
 
 const NavBar = () => {
-  const isLogin = localStorage.getItem("jwt");
+  const { state, dispatch } = useContext(UserContext);
+  const history = useHistory();
+  const renderList = () => {
+    if (!state) {
+      return [
+        <li key={1}>
+          <Link to='/'>SignUp</Link>
+        </li>,
+        <li key={2}>
+          <Link to='/signin'>SignIn</Link>
+        </li>,
+        <li key={3}>
+          <Link to='/home'>Home</Link>
+        </li>,
+        <li key={4}>
+          <Link to='/leaderboard'>Leaderboard</Link>
+        </li>,
+      ];
+    } else {
+      return [
+        <li key={5}>
+          <Link to='/profile'>Profile</Link>
+        </li>,
+        <li key={6}>
+          <Link to='/home'>Home</Link>
+        </li>,
+        <li key={7}>
+          <Link to='/leaderboard'>Leaderboard</Link>
+        </li>,
+        <li key={8}>
+          <button
+            className='btn #c62828 red darken-3'
+            onClick={() => {
+              localStorage.clear();
+              dispatch({ type: "CLEAR" });
+              history.push("/signin");
+            }}
+          >
+            Logout
+          </button>
+        </li>,
+      ];
+    }
+  };
 
   return (
     <nav>
       <div>
-        <Link to='/home' className='brand-logo'>
+        <Link to='/home' className='brand-logo left'>
           Movie Voting Website
         </Link>
-        {!isLogin ? (
-          <ul id='nav-mobile'>
-            <li>
-              <Link to='/'>SignUp</Link>
-            </li>
-            <li>
-              <Link to='/signin'>SignIn</Link>
-            </li>
-            <li>
-              <Link to='/home'>Home</Link>
-            </li>
-            <li>
-              <Link to='/leaderboard'>Leaderboard</Link>
-            </li>
-          </ul>
-        ) : (
-          <ul id='nav-mobile'>
-            <li>
-              <Link to='/profile'>Profile</Link>
-            </li>
-            <li>
-              <Link to='/home'>Home</Link>
-            </li>
-            <li>
-              <Link to='/leaderboard'>Leaderboard</Link>
-            </li>
-          </ul>
-        )}
+        <ul id='nav-mobile' className='right'>
+          {renderList()}
+        </ul>
       </div>
     </nav>
   );
