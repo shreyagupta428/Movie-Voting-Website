@@ -4,13 +4,43 @@ const mongoose=require('mongoose')
 const requireLogin= require('../middleware/requireLogin')
 let Movie=require('../models/movie')
 
+//route to check if number of nominations made by user is greater than 5 or not
+router.post("/nominate/check",requireLogin,(req,res)=>{
 
-router.post("/nominate",requireLogin,(req,res,next)=>{
-    console.log(req.user)
-    console.log(req.body)
+   var c=0,d=-1;
+   Movie.find()
+   .then(movies=>{
+   
+    movies.map((async movie=>{
+        //console.log("movvvvv",movie.nominatedby)
+        movie.nominatedby.map(async  x=>{
+            if(JSON.stringify(x)===JSON.stringify(req.user._id))
+             c++;
+            if(c>4)
+            d=0;
+            
+        })
+    })) 
+    
+    if(d==0)
+    {
+        return res.json({error:"You cannot nominate more than 5 movies"})  
+       
+    }
+    else
+    {
+        return res.json({message:"You can make nomination"})    
+    } 
+   })
+
+})
+
+
+//route to make nomination
+router.post("/nominate",requireLogin,(req,res)=>{
     const {title,language,overview,movieId,image}=req.body
-    console.log(title,language,overview,movieId,image)
-    Movie.findOne({movieId:movieId})
+            Movie.findOne({movieId:movieId})
+            
     .then((savedMovie)=>{
         if(savedMovie)
         {
@@ -52,8 +82,7 @@ router.post("/nominate",requireLogin,(req,res,next)=>{
                     res.json({message:"Nomination made!"})
                 })
                 .catch(err=>console.log(err))
-            
-            
+  
         }
     })
     .catch(err=>{
@@ -73,5 +102,20 @@ router.get("/mypost",requireLogin,(req,res)=>{
 router.get("/leaderboard",(req,res)=>{
     Movie.find()
     .then(movies=>res.send({movies}))
+})
+
+router.post("/remove/nomination",(req,res)=>{
+    const {movieId}=req.body
+    console.log("hiii",movieId)
+    Movie.findOne({movieId},(err,savedMovie)=>{
+        if(err)
+        console.log(err)
+        else
+        {console.log(savedMovie)
+            res.send({message:"hello"})
+        }
+    })
+    res.json({message:"hello"})
+
 })
 module.exports=router

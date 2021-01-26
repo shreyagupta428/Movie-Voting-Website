@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Typography, Row, Button } from 'antd';
+import React, { useEffect, useState} from 'react'
+import { Typography, Row} from 'antd';
 import {API_KEY,API_URL,IMAGE_BASE_URL, IMAGE_SIZE, POSTER_SIZE} from '../constants/config'
-import {BrowserRouter,Route,Switch} from "react-router-dom"
 import MainImage from './Sections/MainImage'
 import GridCard from './Sections/GridCards'
 import { MDBCol, MDBIcon } from "mdbreact";
