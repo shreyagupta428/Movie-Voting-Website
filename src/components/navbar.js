@@ -1,8 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React,{useContext} from 'react'
+import { Link,useHistory } from "react-router-dom";
+import {UserContext} from '../App'
 const NavBar = () => {
   const isLogin = localStorage.getItem("jwt");
+ //  const {state,dispatch} = useContext(UserContext)
+   const history = useHistory()
   return (
     <nav>
       <div>
@@ -11,7 +13,7 @@ const NavBar = () => {
         </Link>
 
         {!isLogin ? (
-          <ul id='nav-mobile'>
+          <ul id='nav-mobile' className="right">
             <li>
               <Link to='/'>SignUp</Link>
             </li>
@@ -26,13 +28,22 @@ const NavBar = () => {
             </li>
           </ul>
         ) : (
-          <ul id='nav-mobile'>
+          <ul id='nav-mobile' className="right">
             <li>
               <Link to='/profile'>Profile</Link>
             </li>
             <li>
               <Link to='/home'>Home</Link>
             </li>
+            <button className="btn #c62828 red darken-3"
+            onClick={()=>{
+              localStorage.clear()
+              //dispatch({type:"CLEAR"})
+              history.push('/signin')
+            }}
+            >
+                Logout
+            </button>
             <li>
               <Link to='/leaderboard'>Leaderboard</Link>
             </li>
