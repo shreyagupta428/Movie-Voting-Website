@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import LeaderboardMovie from "./Sections/LeaderboardMovie";
 
 const Leaderboard = () => {
   const [movies, setMovies] = useState([]);
@@ -7,7 +8,6 @@ const Leaderboard = () => {
     setMovies([1]);
     axios.get("http://localhost:5000/movie/leaderboard").then((res) => {
       var arr = res.data.movies;
-      console.log(arr);
       arr.sort(function (a, b) {
         if (a.nominatedby.length > b.nominatedby.length) return -1;
         else return 1;
@@ -17,12 +17,11 @@ const Leaderboard = () => {
   }, []);
 
   return (
-    <div>
+    <main className='container'>
       {movies.map((item) => {
-        console.log(item);
-        return <div>{item.title}</div>;
+        return <LeaderboardMovie item={item} />;
       })}
-    </div>
+    </main>
   );
 };
 
