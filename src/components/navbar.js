@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const isLogin = localStorage.getItem("jwt");
+
   return (
     <nav>
       <div>
         <Link to='/home' className='brand-logo'>
           Movie Voting Website
         </Link>
-
         {!isLogin ? (
           <ul id='nav-mobile'>
             <li>
