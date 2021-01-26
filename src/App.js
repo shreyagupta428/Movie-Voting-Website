@@ -1,6 +1,6 @@
 import './App.css';
-import React, { useEffect, useState, useRef } from 'react'
-import {BrowserRouter,Route,Switch} from "react-router-dom"
+import React from 'react'
+import {BrowserRouter,Route} from "react-router-dom"
 import LandingPage from './components/LandingPage'
 import SignIn from './components/login'
 import NavBar from './components/navbar'
