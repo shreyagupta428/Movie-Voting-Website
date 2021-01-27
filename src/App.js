@@ -19,6 +19,7 @@ function App() {
       <Route exact path="/profile" component={Profile}/>
       <Route exact path="/home" component={LandingPage}/>
       <Route exact path="/leaderboard" component={Leaderboard}/>
+      <Route path="/movie/:id" component={MovieDetail} />
       </BrowserRouter>
     </div>
   );
