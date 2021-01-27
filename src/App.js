@@ -1,6 +1,6 @@
 import './App.css';
-import React,{useEffect,createContext,useReducer,useContext} from 'react';
-import {BrowserRouter,Route,Switch} from "react-router-dom"
+import React from 'react'
+import {BrowserRouter,Route} from "react-router-dom"
 import LandingPage from './components/LandingPage'
 import SignIn from './components/login'
 import NavBar from './components/navbar'
@@ -8,7 +8,7 @@ import SignUp from './components/signup'
 import Profile from './components/Profile'
 import Leaderboard from './components/Leaderboard'
 import {reducer,initialState} from './reducers/userReducer'
-export const UserContext = createContext()
+//export const UserContext = createContext()
 function App() {
   // const [state,dispatch] = useReducer(reducer,initialState)
   return (

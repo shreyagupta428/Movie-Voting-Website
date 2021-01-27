@@ -3,15 +3,12 @@ import { Link,useHistory } from "react-router-dom";
 import {UserContext} from '../App'
 const NavBar = () => {
   const isLogin = localStorage.getItem("jwt");
- //  const {state,dispatch} = useContext(UserContext)
-   const history = useHistory()
   return (
     <nav>
       <div>
         <Link to='/home' className='brand-logo'>
           Movie Voting Website
         </Link>
-
         {!isLogin ? (
           <ul id='nav-mobile' className="right">
             <li>
@@ -39,7 +36,7 @@ const NavBar = () => {
             onClick={()=>{
               localStorage.clear()
               //dispatch({type:"CLEAR"})
-              history.push('/signin')
+             // history.push('/signin')
             }}
             >
                 Logout
