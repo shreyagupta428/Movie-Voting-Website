@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import ProfileDisplay from './Sections/ProfileDisplay';
 import { useHistory } from "react-router-dom";
 
 const Profile = () => {
@@ -22,23 +23,28 @@ const Profile = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div>
-      <div className='gallery'>
-        {mymovies.map((item) => {
-          return (
-            <div>
-              <h1>{item.title}</h1>
-              <img
-                key={item.movieId}
-                className='item'
-                src={item.image}
-                alt={item.title}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    // <div>
+    //   <div className='gallery'>
+    //     {mymovies.map((item) => {
+    //       return (
+    //         <div>
+    //           <h1>{item.title}</h1>
+    //           <img
+    //             key={item.movieId}
+    //             className='item'
+    //             src={item.image}
+    //             alt={item.title}
+    //           />
+    //         </div>
+    //       );
+    //     })}
+    //   </div>
+    // </div>
+    <main>
+      {mymovies.map((movie) => {
+        return <ProfileDisplay movie={movie} />;
+      })}
+    </main>
   );
 };
 
