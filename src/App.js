@@ -9,6 +9,7 @@ import React, { useEffect, createContext, useReducer, useContext } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { reducer, initialState } from "./reducers/userReducer";
 import MovieDetail from "./components/Moviedetail";
+
 export const UserContext = createContext();
 
 const Routing = () => {

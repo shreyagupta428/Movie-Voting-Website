@@ -5,7 +5,6 @@ import axios from "axios";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
 
-
 function GridCards(props) {
   let {
     actor,
@@ -27,7 +26,7 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
-   
+
     axios
       .post("http://localhost:5000/movie/nominate/check", movie, {
         headers: {
