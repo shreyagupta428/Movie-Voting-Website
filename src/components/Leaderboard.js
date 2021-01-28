@@ -5,8 +5,8 @@ import "../Leaderboard.css";
 
 const Leaderboard = () => {
   const [movies, setMovies] = useState([]);
+
   useEffect(() => {
-    setMovies([1]);
     axios.get("http://localhost:5000/movie/leaderboard").then((res) => {
       var arr = res.data.movies;
       arr.sort(function (a, b) {

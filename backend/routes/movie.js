@@ -6,7 +6,6 @@ let Movie=require('../models/movie')
 
 //route to check if number of nominations made by user is greater than 5 or not
 router.post("/nominate/check",requireLogin,(req,res)=>{
-
    var c=0,d=-1;
    Movie.find()
    .then(movies=>{
@@ -104,18 +103,6 @@ router.get("/leaderboard",(req,res)=>{
     .then(movies=>res.send({movies}))
 })
 
-router.post("/remove/nomination",(req,res)=>{
-    const {movieId}=req.body
-    console.log("hiii",movieId)
-    Movie.findOne({movieId},(err,savedMovie)=>{
-        if(err)
-        console.log(err)
-        else
-        {console.log(savedMovie)
-            res.send({message:"hello"})
-        }
-    })
-    res.json({message:"hello"})
 
-})
+
 module.exports=router

@@ -25,6 +25,14 @@ const Profile = () => {
         .catch((err) => console.log(err));
     }
   }, []);
+
+   const remove=(movieId)=>{
+       console.log("remove");
+
+     axios.post("http://localhost:5000/movie/remove",movieId)
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err))
+     }
   return (
     <div>
       <div className='gallery'>
@@ -38,6 +46,7 @@ const Profile = () => {
                 src={item.image}
                 alt={item.title}
               />
+              <button onClick={()=>remove(item.movieId)}>Remove</button>
             </div>
           );
         })}

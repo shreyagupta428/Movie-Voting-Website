@@ -2,10 +2,8 @@ import React from "react";
 import { Col } from "antd";
 import { IMAGE_BASE_URL } from "../../constants/config";
 import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import M from "materialize-css";
-toast.configure();
+import { Link } from "react-router-dom";
 
 function GridCards(props) {
   let {
@@ -28,6 +26,7 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
+
     axios
       .post("http://localhost:5000/movie/nominate/check", movie, {
         headers: {
@@ -83,14 +82,14 @@ function GridCards(props) {
     return (
       <Col key={key} lg={6} md={8} xs={24}>
         <div style={{ position: "relative" }}>
-          <a href={`/movie/${movieId}`}>
+        <Link to={`/movie/${movieId}`}>
             <img
               style={{ width: "100%", height: "320px" }}
               alt={movieName}
               src={image}
             />
             {/* <p>{movieName}</p> */}
-          </a>
+          </Link>
           {/* {nominated?<button onClick={handleclickRomoveNominate}>Remove Nomination</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
           <button onClick={handleclickNominate}>Nominate</button>
         </div>
