@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LeaderboardMovie from "./Sections/LeaderboardMovie";
+import "../Leaderboard.css";
 
 const Leaderboard = () => {
   const [movies, setMovies] = useState([]);
@@ -18,6 +19,15 @@ const Leaderboard = () => {
 
   return (
     <main className='container'>
+      <h1
+        style={{
+          fontFamily: `Grand Hotel, cursive`,
+          color: `white`,
+          textAlign: `center`,
+        }}
+      >
+        Leaderboard
+      </h1>
       {movies.map((item) => {
         return <LeaderboardMovie item={item} />;
       })}
