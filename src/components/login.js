@@ -77,6 +77,7 @@ const SignIn = () => {
             Login
           </button>
         </form>
+        <br></br>
         <h5>
           <Link to='/'>Don't have an account?</Link>
         </h5>

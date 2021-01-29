@@ -45,16 +45,6 @@ function LandingPage(props) {
 
       {/* search bar   */}
       <MDBCol md='6'>
-        <div style={{ marginLeft: 600, marginTop: 10 }}>
-          <div className='input-group md-form form-sm form-1 pl-0'>
-            <div className='input-group-prepend'>
-              <span
-                className='input-group-text purple lighten-3'
-                id='basic-text1'
-              >
-                <MDBIcon className='text-white' icon='search' />
-              </span>
-            </div>
             <input
               className='form-control my-0 py-1'
               type='text'
@@ -66,8 +56,6 @@ function LandingPage(props) {
                 setSearch(e.target.value);
               }}
             />
-          </div>
-        </div>
       </MDBCol>
 
       <div style={{ width: "20%", margin: "1rem auto" }}>

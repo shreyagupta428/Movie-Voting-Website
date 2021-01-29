@@ -95,6 +95,7 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
+        <br></br>
         <h5>
           <Link to='/signin'>Already have an account?</Link>
         </h5>

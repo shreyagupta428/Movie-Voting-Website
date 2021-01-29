@@ -8,6 +8,8 @@ import Leaderboard from "./components/Leaderboard";
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { reducer, initialState } from "./reducers/userReducer";
+import MovieDetail from "./components/Moviedetail";
+
 export const UserContext = createContext();
 
 const Routing = () => {
@@ -25,6 +27,7 @@ const Routing = () => {
       <Route exact path='/profile' component={Profile} />
       <Route exact path='/home' component={LandingPage} />
       <Route exact path='/leaderboard' component={Leaderboard} />
+      <Route exact path='/movie/:id' component={MovieDetail} />
     </Switch>
   );
 };
