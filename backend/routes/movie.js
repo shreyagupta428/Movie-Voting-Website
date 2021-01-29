@@ -104,18 +104,31 @@ router.get("/leaderboard",(req,res)=>{
     .then(movies=>res.send({movies}))
 })
 
-router.post("/remove/nomination",(req,res)=>{
-    const {movieId}=req.body
-    console.log("hiii",movieId)
-    Movie.findOne({movieId},(err,savedMovie)=>{
-        if(err)
-        console.log(err)
-        else
-        {console.log(savedMovie)
-            res.send({message:"hello"})
-        }
-    })
-    res.json({message:"hello"})
-
+router.post('/remove',requireLogin, (req,res)=>{
+   const {title,language,overview,movieId,image}=req.body
+   Movie.findOne({movieId:movieId})
+    .then(movies=>{
+        let arr=movies.nominatedby;
+      const index=arr.indexOf(req.user._id)
+    
+   arr.splice(index,1);
+    movies.nominatedby=arr
+              if(arr.length==0)
+              {
+                 movies.delete()
+                 .then( result=> res.json({message:"Your Nomination is removed"})
+                 )
+                 .catch(err=>console.log(err))
+              }
+              else{
+                movies.save()
+                .then(movie=>{
+                 res.json({message:"Your Nomination is removed"})
+               })
+               .catch(err=>console.log(err))
+              }
 })
+})
+
 module.exports=router
+

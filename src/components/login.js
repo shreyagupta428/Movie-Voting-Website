@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import "../App.css";
+import { UserContext } from "../App";
 import M from "materialize-css";
 import { Link, useHistory } from "react-router-dom";
 
 const SignIn = () => {
   const history = useHistory();
-  if (localStorage.getItem("jwt")) history.push("/home");
-
+  const { state, dispatch } = useContext(UserContext);
+  if (state) history.push("/home");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -41,7 +41,7 @@ const SignIn = () => {
         else {
           localStorage.setItem("jwt", res.data.token);
           localStorage.setItem("user", JSON.stringify(res.data.user));
-
+          dispatch({ type: "USER", payload: res.data.user });
           M.toast({
             html: "Signed in successfully",
             classes: "#43a047 green darken-1",
@@ -78,7 +78,7 @@ const SignIn = () => {
           </button>
         </form>
         <h5>
-          <Link to='/signup'>Don't have an account?</Link>
+          <Link to='/'>Don't have an account?</Link>
         </h5>
       </div>
     </div>

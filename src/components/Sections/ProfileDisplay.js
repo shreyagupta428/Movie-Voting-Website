@@ -1,19 +1,45 @@
-import React from "react";
-//import M from "materialize-css";
+import React,{useEffect,useState,useContext} from 'react'
+import {UserContext} from '../../App'
+import {useParams} from 'react-router-dom'
 const ProfileDisplay = ({ movie }) => {
- console.log(movie);
-//   const style = {
-//     backgroundImage: `url(${item.image}`,
-//   };
+// console.log(movie);
+ const [userProfile,setProfile] = useState(null)
+    
+    const {state,dispatch} = useContext(UserContext)
+    const {userid} = useParams()
+    // const unfollowUser = ()=>{
+    //     fetch('/remove',{
+    //         method:"put",
+    //         headers:{
+    //             "Content-Type":"application/json",
+    //             "Authorization":"Bearer "+localStorage.getItem('jwt')
+    //         },
+    //         body:JSON.stringify({
+    //             unfollowId:userid
+    //         })
+    //     }).then(res=>res.json())
+    //     .then(data=>{
+            
+    //         dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+    //          localStorage.setItem("user",JSON.stringify(data))
+            
+    //          setProfile((prevState)=>{
+    //             const newFollower = prevState.user.followers.filter(item=>item != data._id )
+    //              return {
+    //                  ...prevState,
+    //                  user:{
+    //                      ...prevState.user,
+    //                      followers:newFollower
+    //                     }
+    //              }
+    //          })
+    //          setShowFollow(true)
+             
+    //     })
+    // }
    return (
-//     // <div>
-//     <div className='movieContainer'>
-//       <div className='movieImage' style={style}></div>
-//       <div className='movieContent'>{item.title}</div>
-//     </div>
-//     // </div>
-<main className="auth-card ">
 
+<main className="auth-card ">
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
       <img class="activator" src={movie.image} />
@@ -27,13 +53,10 @@ const ProfileDisplay = ({ movie }) => {
       <p>{movie.overview}</p>
     </div>
   </div>
-</main>
+ </main>
 
 
-            
-
-
-   );
+);
 };
 
 export default ProfileDisplay;
