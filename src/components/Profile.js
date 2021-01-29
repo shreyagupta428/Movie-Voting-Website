@@ -26,13 +26,19 @@ const Profile = () => {
     }
   }, []);
 
-   const remove=(movieId)=>{
-       console.log("remove");
+   const remove=(movie)=>{
+       //console.log("remove");
 
-     axios.post("http://localhost:5000/movie/remove",movieId)
+     axios.post("http://localhost:5000/movie/remove/nomination",movie,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }})
     .then(res=>console.log(res))
     .catch(err=>console.log(err))
-     }
+   
+  }
+
   return (
     <div>
       <div className='gallery'>
@@ -46,7 +52,7 @@ const Profile = () => {
                 src={item.image}
                 alt={item.title}
               />
-              <button onClick={()=>remove(item.movieId)}>Remove</button>
+              <button onClick={()=>remove(item)}>Remove</button>
             </div>
           );
         })}

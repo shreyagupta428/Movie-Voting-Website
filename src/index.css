@@ -87,20 +87,20 @@ h4 {
   margin-bottom: 0.75rem;
 }
 h1 {
-  font-size: 5rem;
+  font-size: 5rem !important
 }
 h2 {
-  font-size: 2rem;
+  font-size: 2rem !important
 }
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.25rem !important
 }
 h4 {
-  font-size: 0.875rem;
+  font-size: 0.875rem !important
 }
 p {
-  margin-bottom: 1.25rem;
-  color: var(--clr-grey-5);
+  margin-bottom: 1.25rem !important;
+  color: var(--clr-grey-5) !important
 }
 @media screen and (min-width: 800px) {
   h1 {

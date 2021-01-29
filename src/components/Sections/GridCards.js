@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col } from "antd";
 import { IMAGE_BASE_URL } from "../../constants/config";
 import axios from "axios";
@@ -18,6 +18,7 @@ function GridCards(props) {
     movie_lang,
   } = props;
   const POSTER_SIZE = "w154";
+  const [isNominated,setisNominated]=useState(false)
 
   const handleclickNominate = () => {
     const movie = {
@@ -28,6 +29,8 @@ function GridCards(props) {
       image: image,
     };
    
+
+
     axios
       .post("http://localhost:5000/movie/nominate/check", movie, {
         headers: {
@@ -53,7 +56,7 @@ function GridCards(props) {
                   html: res.data.error,
                   classes: "#c62828 red darken-3",
                 });
-                // <Alert severity="error">This is an error alert — check it out!</Alert>
+               
               } else {
                 M.toast({
                   html: res.data.message,
@@ -93,6 +96,7 @@ function GridCards(props) {
           </Link>
           {/* {nominated?<button onClick={handleclickRomoveNominate}>Remove Nomination</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
           <button onClick={handleclickNominate}>Nominate</button>
+
         </div>
       </Col>
     );

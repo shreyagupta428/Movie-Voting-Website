@@ -10,6 +10,7 @@ import {
 import MainImage from "./Sections/MainImage";
 import GridCard from "./Sections/GridCards";
 import { MDBCol, MDBIcon } from "mdbreact";
+import axios from "axios"
 
 const { Title } = Typography;
 
@@ -17,6 +18,7 @@ function LandingPage(props) {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   const [MainMovieImage, setMainMovieImage] = useState(null);
+  
 
   useEffect(() => {
     let uri;
@@ -24,11 +26,12 @@ function LandingPage(props) {
       uri = `${API_URL}trending/movie/week?api_key=${API_KEY}&language=en-US&page=1`;
     else
       uri = `${API_URL}search/movie/?api_key=${API_KEY}&language=en-US&page=1&query=${search}`;
-    fetch(uri)
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies([...data.results]);
-        setMainMovieImage(data.results[0] || MainMovieImage);
+
+    axios.get(uri)
+      .then((res) => {
+        console.log(res.data)
+        setMovies([...res.data.results]);
+        setMainMovieImage(res.data.results[0] || MainMovieImage);
       })
       .catch((err) => console.log(err));
   }, [search]);

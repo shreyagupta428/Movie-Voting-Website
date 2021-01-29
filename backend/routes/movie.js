@@ -103,6 +103,47 @@ router.get("/leaderboard",(req,res)=>{
     .then(movies=>res.send({movies}))
 })
 
-
+router.post("/remove/nomination",requireLogin,(req,res)=>{
+    //console.log(req.body)
+    const {movieId}=req.body
+    console.log(req.user._id)
+    console.log(movieId)
+    Movie.findOne({movieId},(err,savedMovie)=>{
+        if(err)
+        {
+            //console.log(err)
+            res.json({error:"Something went wrong"})
+        }
+        else{
+            let arr=savedMovie.nominatedby
+            const index=arr.indexOf(req.user._id)
+            //console.log(index)
+            if (index > -1) {
+                arr.splice(index, 1);
+              }
+              //console.log(savedMovie.nominatedby)
+              savedMovie.nominatedby=arr
+              if(arr.length==0)
+              {
+                 // console.log("acfhfhhfh")
+                 savedMovie.delete()
+                 .then( abc=> res.json({message:"Nomination removed"})
+                 )
+                 .catch(err=>console.log(err))
+              }
+              else{
+                savedMovie.save()
+                .then(movie=>{
+                 res.json({message:"Nomination removed"})
+               })
+               .catch(err=>console.log(err))
+              }
+               
+              
+              
+        }
+    })
+   
+})
 
 module.exports=router
