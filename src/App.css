@@ -1,9 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap");
 
+.linked,.linked:hover{
+  color:white
+}
 
 .brand-logo,
 h2 {
   font-family: "Grand Hotel", cursive;
+  color: black;
+  
 }
 
 .mycard {
@@ -12,7 +17,8 @@ h2 {
 .auth-card {
   padding: 20px;
   text-align: center;
-  max-width: 400px;
+  max-width: 450px;
+  max-height: 500px;
   margin: 10px auto;
 }
 .input-field input[type="text"]:focus {

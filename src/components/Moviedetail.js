@@ -2,11 +2,10 @@ import React, { useEffect ,useState} from "react";
 import axios from "axios"
 import {API_KEY,API_URL,movieUrl} from "../constants/config"
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
-import { Modal } from "react-bootstrap";
-import ReactPlayer from "react-player";
 import ModalVideo from 'react-modal-video'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "react-modal-video/scss/modal-video.scss";
+import {Link} from "react-router-dom"
 
 const MovieDetail=({ match })=>{
 
@@ -16,6 +15,7 @@ const MovieDetail=({ match })=>{
   const [detail, setDetail] = useState([]);
   const [video, setVideo] = useState([]);
   const [casts, setCasts] = useState([]);
+  const [similarMovie, setSimilarMovie] = useState([]);
 
 
    const fetchMovieDetail = async (id) => {
@@ -59,6 +59,28 @@ const MovieDetail=({ match })=>{
         
     } catch (error) { }
  }
+ const fetchSimilarMovie = async (id) => {
+  try {
+      const { data } = await axios.get(`${movieUrl}/${id}/similar`, {
+          params: {
+              api_key:API_KEY,
+              language: 'en_US'
+          }
+      });
+      const posterUrl = 'https://image.tmdb.org/t/p/original/';
+      const modifiedData = data['results'].map((m) => ({
+          id: m['id'],
+          backPoster: posterUrl + m['backdrop_path'],
+          popularity: m['popularith'],
+          title: m['title'],
+          poster: posterUrl + m['poster_path'],
+          overview: m['overview'],
+          
+      }))
+
+      return modifiedData;
+  } catch (error) { }
+}
 
   useEffect(()=>{
 
@@ -66,7 +88,7 @@ const MovieDetail=({ match })=>{
         setDetail(await fetchMovieDetail(params.id));
         setVideo(await fetchMovieVideos(params.id));
         setCasts(await fetchCasts(params.id));
-        //console.log(detail,video,casts)
+        setSimilarMovie(await fetchSimilarMovie(params.id));
       };
   
       fetchAPI();
@@ -109,6 +131,22 @@ const MovieDetail=({ match })=>{
     );
   });
 
+  const similarMovieList = similarMovie.slice(0, 4).map((item, index) => {
+    return (
+      <div className="col-md-3 col-sm-6" key={index}>
+        <div className="card">
+          <Link to={`/movie/${item.id}`}>
+            <img className="img-fluid" src={item.poster} alt={item.title}></img>
+          </Link>
+        </div>
+        <div className="mt-3">
+          <p style={{ fontWeight: "bolder" }}>{item.title}</p>
+          
+        </div>
+      </div>
+    );
+  });
+
  return(
     <div className="container">
     <div className="row mt-2">
@@ -119,6 +157,7 @@ const MovieDetail=({ match })=>{
           className="img-fluid"
           src={`http://image.tmdb.org/t/p/original/${detail.backdrop_path}`}
           alt={detail.title}
+          style={{borderRadius:50}}
         ></img>
         <div className="carousel-center">
           <i
@@ -139,22 +178,16 @@ const MovieDetail=({ match })=>{
     <div className="row mt-3">
       <div className="col">
         <p style={{ color: "#5a606b", fontWeight: "bolder" }}>GENRE</p>
-      </div>
-    </div>
-
-    <div className="row mt-3">
-      <div className="col">
         <ul className="list-inline">{genresList}</ul>
       </div>
     </div>
+    
 
     <div className="row mt-3">
       <div className="col">
-        
-        <div className="mt-3">
-          <p style={{ color: "#5a606b", fontWeight: "bolder" }}>OVERVIEW</p>
+        <p style={{ color: "#5a606b", fontWeight: "bolder" }}>OVERVIEW</p>
           {detail.overview}
-        </div>
+        
       </div>
     </div>
 
@@ -181,17 +214,17 @@ const MovieDetail=({ match })=>{
     </div>
     <div className="row mt-3">{castList}</div>
 
-    {/* <div className="row mt-3">
+    <div className="row mt-3">
       <div className="col">
         <p style={{ color: "#5a606b", fontWeight: "bolder" }}>
           SIMILAR MOVIES
         </p>
+        <div className="row mt-3">{similarMovieList}</div>
       </div>
-    </div> */}
+    </div>
+    
 
-    {/* <div className="row mt-3">{similarMovieList}</div> */}
-
-    <hr className="mt-5" style={{ borderTop: "1px solid #5a606b" }}></hr>
+   
 
     
     

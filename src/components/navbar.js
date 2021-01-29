@@ -9,28 +9,28 @@ const NavBar = () => {
     if (!state) {
       return [
         <li key={1}>
-          <Link to='/'>SignUp</Link>
+          <Link className="linked" to='/'>SignUp</Link>
         </li>,
         <li key={2}>
-          <Link to='/signin'>SignIn</Link>
+          <Link className="linked" to='/signin'>SignIn</Link>
         </li>,
         <li key={3}>
-          <Link to='/home'>Home</Link>
+          <Link className="linked" to='/home'>Home</Link>
         </li>,
         <li key={4}>
-          <Link to='/leaderboard'>Leaderboard</Link>
+          <Link className="linked" to='/leaderboard'>Leaderboard</Link>
         </li>,
       ];
     } else {
       return [
         <li key={5}>
-          <Link to='/profile'>Profile</Link>
+          <Link className="linked" to='/profile'>Profile</Link>
         </li>,
         <li key={6}>
-          <Link to='/home'>Home</Link>
+          <Link className="linked" to='/home'>Home</Link>
         </li>,
         <li key={7}>
-          <Link to='/leaderboard'>Leaderboard</Link>
+          <Link className="linked" to='/leaderboard'>Leaderboard</Link>
         </li>,
         <li key={8}>
           <button
@@ -51,7 +51,7 @@ const NavBar = () => {
   return (
     <nav>
       <div>
-        <Link to='/home' className='brand-logo left'>
+        <Link  className="linked" to='/home' className='brand-logo left'>
           Movie Voting Website
         </Link>
         <ul id='nav-mobile' className='right'>
