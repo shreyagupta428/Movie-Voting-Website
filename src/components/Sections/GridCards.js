@@ -28,7 +28,7 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
-    
+   
     axios
       .post("http://localhost:5000/movie/nominate/checkfor5", movie, {
         headers: {
@@ -40,6 +40,7 @@ function GridCards(props) {
         if (res.data.error)
           M.toast({ html: res.data.error, classes: "#c62828 red darken-3" });
         else {
+         
           axios
             .post("http://localhost:5000/movie/nominate", movie, {
               headers: {
@@ -68,6 +69,10 @@ function GridCards(props) {
       .catch((err) => console.log(err));
   };
 
+  
+  
+
+
   if (actor) {
     return (
       <Col key={key} lg={6} md={8} xs={200}>
@@ -94,7 +99,7 @@ function GridCards(props) {
           </Link>
           {/* {isNominated?<button onClick={handleclickRomoveNominate}>Nominated</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
           <button onClick={handleclickNominate}>Nominate</button>
-
+          
         </div>
       </Col>
     );

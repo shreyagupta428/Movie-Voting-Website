@@ -3,6 +3,7 @@ const router=express.Router()
 const mongoose=require('mongoose')
 const requireLogin= require('../middleware/requireLogin')
 let Movie=require('../models/movie')
+let BlackListMovies=require('../models/BlackListMovie')
 
 //route to check if number of nominations made by user is greater than 5 or not
 router.post("/nominate/checkfor5",requireLogin,(req,res)=>{
@@ -128,15 +129,62 @@ router.post('/remove',requireLogin, (req,res)=>{
 })
 })
 
-// //route to blacklist a movie
-// router.post("/blacklist",(req,res)=>{
-//    const {movieId}=req.body;
-//    Movie.findOne({movieId},(err,savedMovie)=>{
-//       savedMovie.delete()
-//       .then(result=>res.json({message:"Movie is blacklisted"}))
-//       .catch(err=>console.log(err))
-//    })
-// })
+
+
+//Route for blacklisting
+router.post("/blacklist",requireLogin,(req,res)=>{
+   const {movieId}=req.body;
+
+   Movie.findOne({movieId},(err,savedMovie)=>{
+       if(err)
+       console.log(err)
+      else{
+        
+        //if the movie admin wants to blacklist is not in database
+        if(savedMovie==null)
+        {
+            const blacklistmovie=new BlackListMovies({
+                movieId,
+                nominatedby:[]
+        
+            })
+            blacklistmovie.save()
+            .then(result=> res.json({message:"Movie Blacklisted Successfully"}))
+            .catch(err=>console.log(err))
+
+        }
+        else{
+
+            const blacklistmovie=new BlackListMovies({
+                movieId,
+                nominatedby:savedMovie.nominatedby
+        
+            })
+            blacklistmovie.save()
+            .then(result=> res.json({message:"Movie Blacklisted Successfully"}))
+            .catch(err=>console.log(err))
+             
+            //deleting the blacklisted movie from database
+            savedMovie.delete()
+            .then(result=>console.log("Movie deleted from database"))
+            .catch(err=>console.log(err))
+           
+        }
+        
+      }
+      
+     
+   })
+   
+   
+})
+
+//route to get list of all blacklisted movies
+router.get("/blacklistedmovies",requireLogin,(req,res)=>{
+  BlackListMovies.find()
+  .then(movies=>res.json({movies}))
+  .catch(err=>console.log(err))
+})
 
 module.exports=router
 

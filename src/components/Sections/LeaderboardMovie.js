@@ -1,7 +1,7 @@
 import React from "react";
 import '../../Leaderboard.css';
 const LeaderboardMovie = ({ item }) => {
-  console.log(item);
+ // console.log(item);
   const style = {
     backgroundImage: `url(${item.image}`,
   };
