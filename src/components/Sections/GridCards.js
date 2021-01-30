@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col } from "antd";
 import { IMAGE_BASE_URL } from "../../constants/config";
 import axios from "axios";
@@ -18,6 +18,8 @@ function GridCards(props) {
   } = props;
   // console.log(props);
   const POSTER_SIZE = "w154";
+  
+
 
   const handleclickNominate = () => {
     const movie = {
@@ -27,9 +29,9 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
-
+   
     axios
-      .post("http://localhost:5000/movie/nominate/check", movie, {
+      .post("http://localhost:5000/movie/nominate/checkfor5", movie, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -39,6 +41,7 @@ function GridCards(props) {
         if (res.data.error)
           M.toast({ html: res.data.error, classes: "#c62828 red darken-3" });
         else {
+         
           axios
             .post("http://localhost:5000/movie/nominate", movie, {
               headers: {
@@ -53,7 +56,7 @@ function GridCards(props) {
                   html: res.data.error,
                   classes: "#c62828 red darken-3",
                 });
-                // <Alert severity="error">This is an error alert — check it out!</Alert>
+               
               } else {
                 M.toast({
                   html: res.data.message,
@@ -67,6 +70,7 @@ function GridCards(props) {
       .catch((err) => console.log(err));
   };
 
+<<<<<<< HEAD
   // return (
   //   <Col key={key} lg={6} md={8} xs={24}>
   //     <div style={{ position: "relative" }}>
@@ -100,6 +104,39 @@ function GridCards(props) {
               ? `${movie_overview.substring(0, 150)}...`
               : movie_overview}
           </p>
+=======
+  
+  
+
+
+  if (actor) {
+    return (
+      <Col key={key} lg={6} md={8} xs={200}>
+        <div style={{ position: "relative" }}>
+          <img
+            style={{ width: "100%", height: "320px" }}
+            alt={characterName}
+            src={`${IMAGE_BASE_URL}${POSTER_SIZE}${image}`}
+          />
+        </div>
+      </Col>
+    );
+  } else {
+    return (
+      <Col key={key} lg={6} md={8} xs={24}>
+        <div style={{ position: "relative" }}>
+        <Link to={`/movie/${movieId}`}>
+            <img
+              style={{ width: "100%", height: "320px" }}
+              alt={movieName}
+              src={image}
+            />
+            {/* <p>{movieName}</p> */}
+          </Link>
+          {/* {isNominated?<button onClick={handleclickRomoveNominate}>Nominated</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
+          <button onClick={handleclickNominate}>Nominate</button>
+          
+>>>>>>> becd32ebbe9803c59e334f088d2ba4ca8d64498e
         </div>
       </div>
     </div>

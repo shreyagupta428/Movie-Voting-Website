@@ -43,5 +43,32 @@ function App() {
     </UserContext.Provider>
   );
 }
-
+// const Routing = ()=>{
+//   const {state,dispatch} = useContext(UserContext)
+//   return(
+//      <div>
+   
+//        <BrowserRouter>
+//        <NavBar />    
+//          <Route exact path="/signin" component={SignIn}/>
+//        <Route exact path="/" component={SignUp}/>
+//        <Route exact path="/profile" component={Profile}/>
+//        <Route exact path="/home" component={LandingPage}/>
+//        <Route exact path="/leaderboard" component={Leaderboard}/>
+//       </BrowserRouter>
+//     </div>
+//   )
+// }
+// function App() {
+//   const [state,dispatch] = useReducer(reducer,initialState)
+//   return (
+//     <UserContext.Provider value={{state,dispatch}}>
+//     <BrowserRouter>
+      
+//       <Routing />
+      
+//     </BrowserRouter>
+//     </UserContext.Provider>
+//   );
+// }
 export default App;

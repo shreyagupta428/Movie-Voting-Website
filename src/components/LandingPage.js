@@ -11,6 +11,7 @@ import MainImage from "./Sections/MainImage";
 import GridCard from "./Sections/GridCards";
 import { MDBCol } from "mdbreact";
 import "../LandingPage.css";
+import axios from "axios";
 
 const { Title } = Typography;
 
@@ -18,18 +19,47 @@ function LandingPage(props) {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   const [MainMovieImage, setMainMovieImage] = useState(null);
+  const [mymovies, setMyMovies] = useState([]);
+  const [blacklistedMovies, setBlacklistedmovies] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/movie/mypost", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      })
+      .then((res) => {
+        setMyMovies(res.data.myPost);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:5000/movie/blacklistedmovies", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data.movies);
+        setBlacklistedmovies(res.data.movies);
+      });
+  }, []);
   useEffect(() => {
     let uri;
     if (search.length === 0)
       uri = `${API_URL}trending/movie/week?api_key=${API_KEY}&language=en-US&page=1`;
     else
       uri = `${API_URL}search/movie/?api_key=${API_KEY}&language=en-US&page=1&query=${search}`;
-    fetch(uri)
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies([...data.results]);
-        setMainMovieImage(data.results[0]);
+
+    axios
+      .get(uri)
+      .then((res) => {
+        console.log(res.data);
+        setMovies([...res.data.results]);
+        setMainMovieImage(res.data.results[0]);
       })
       .catch((err) => console.log(err));
   }, [search]);
