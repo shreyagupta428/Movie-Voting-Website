@@ -15,11 +15,24 @@ import axios from "axios"
 const { Title } = Typography;
 
 function LandingPage(props) {
+  
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   const [MainMovieImage, setMainMovieImage] = useState(null);
-  
-
+  const [mymovies,setMyMovies]=useState([])
+  useEffect(()=>{
+    axios
+        .get("http://localhost:5000/movie/mypost", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        })
+        .then((res) => {
+          setMyMovies(res.data.myPost);
+        })
+        .catch((err) => console.log(err));
+  },[])
   useEffect(() => {
     let uri;
     if (search.length === 0)
@@ -35,7 +48,8 @@ function LandingPage(props) {
       })
       .catch((err) => console.log(err));
   }, [search]);
-
+ 
+  
   return (
     <div style={{ width: "100%", margin: "0" }}>
       {MainMovieImage && (

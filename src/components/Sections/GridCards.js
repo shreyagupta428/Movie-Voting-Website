@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col } from "antd";
 import { IMAGE_BASE_URL } from "../../constants/config";
 import axios from "axios";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
-
 
 function GridCards(props) {
   let {
@@ -18,7 +17,8 @@ function GridCards(props) {
     movie_lang,
   } = props;
   const POSTER_SIZE = "w154";
-  const [isNominated,setisNominated]=useState(false)
+  
+
 
   const handleclickNominate = () => {
     const movie = {
@@ -28,11 +28,9 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
-   
-
-
+    
     axios
-      .post("http://localhost:5000/movie/nominate/check", movie, {
+      .post("http://localhost:5000/movie/nominate/checkfor5", movie, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -94,7 +92,7 @@ function GridCards(props) {
             />
             {/* <p>{movieName}</p> */}
           </Link>
-          {/* {nominated?<button onClick={handleclickRomoveNominate}>Remove Nomination</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
+          {/* {isNominated?<button onClick={handleclickRomoveNominate}>Nominated</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
           <button onClick={handleclickNominate}>Nominate</button>
 
         </div>

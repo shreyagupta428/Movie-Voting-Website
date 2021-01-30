@@ -5,34 +5,33 @@ const requireLogin= require('../middleware/requireLogin')
 let Movie=require('../models/movie')
 
 //route to check if number of nominations made by user is greater than 5 or not
-router.post("/nominate/check",requireLogin,(req,res)=>{
+router.post("/nominate/checkfor5",requireLogin,(req,res)=>{
    var c=0,d=-1;
    Movie.find()
    .then(movies=>{
    
-    movies.map((async movie=>{
-        //console.log("movvvvv",movie.nominatedby)
-        movie.nominatedby.map(async  x=>{
-            if(JSON.stringify(x)===JSON.stringify(req.user._id))
-             c++;
-            if(c>4)
-            d=0;
-            
-        })
-    })) 
-    
-    if(d==0)
-    {
-        return res.json({error:"You cannot nominate more than 5 movies"})  
-       
-    }
-    else
-    {
-        return res.json({message:"You can make nomination"})    
-    } 
+        movies.map((async movie=>{
+            //console.log("movvvvv",movie.nominatedby)
+            movie.nominatedby.map(async  x=>{
+                if(JSON.stringify(x)===JSON.stringify(req.user._id))
+                c++;
+                if(c>4)
+                d=0; 
+            })
+        }))  
+        if(d==0)
+        {
+            return res.json({error:"You cannot nominate more than 5 movies"})   
+        }
+        else
+        {
+            return res.json({message:"You can make nomination"})    
+        }
+         
    })
 
 })
+
 
 
 //route to make nomination
@@ -103,47 +102,41 @@ router.get("/leaderboard",(req,res)=>{
     .then(movies=>res.send({movies}))
 })
 
-router.post("/remove/nomination",requireLogin,(req,res)=>{
-    //console.log(req.body)
-    const {movieId}=req.body
-    console.log(req.user._id)
-    console.log(movieId)
-    Movie.findOne({movieId},(err,savedMovie)=>{
-        if(err)
-        {
-            //console.log(err)
-            res.json({error:"Something went wrong"})
-        }
-        else{
-            let arr=savedMovie.nominatedby
-            const index=arr.indexOf(req.user._id)
-            //console.log(index)
-            if (index > -1) {
-                arr.splice(index, 1);
-              }
-              //console.log(savedMovie.nominatedby)
-              savedMovie.nominatedby=arr
+router.post('/remove',requireLogin, (req,res)=>{
+   const {title,language,overview,movieId,image}=req.body
+   Movie.findOne({movieId:movieId})
+    .then(movies=>{
+        let arr=movies.nominatedby;
+      const index=arr.indexOf(req.user._id)
+    
+   arr.splice(index,1);
+    movies.nominatedby=arr
               if(arr.length==0)
               {
-                 // console.log("acfhfhhfh")
-                 savedMovie.delete()
-                 .then( abc=> res.json({message:"Nomination removed"})
+                 movies.delete()
+                 .then( result=> res.json({message:"Your Nomination is removed"})
                  )
                  .catch(err=>console.log(err))
               }
               else{
-                savedMovie.save()
+                movies.save()
                 .then(movie=>{
-                 res.json({message:"Nomination removed"})
+                 res.json({message:"Your Nomination is removed"})
                })
                .catch(err=>console.log(err))
               }
-               
-              
-              
-        }
-    })
-   
+})
 })
 
+// //route to blacklist a movie
+// router.post("/blacklist",(req,res)=>{
+//    const {movieId}=req.body;
+//    Movie.findOne({movieId},(err,savedMovie)=>{
+//       savedMovie.delete()
+//       .then(result=>res.json({message:"Movie is blacklisted"}))
+//       .catch(err=>console.log(err))
+//    })
+// })
+
 module.exports=router
+
