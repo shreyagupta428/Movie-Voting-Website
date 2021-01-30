@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col } from "antd";
 import { IMAGE_BASE_URL } from "../../constants/config";
 import axios from "axios";
@@ -17,6 +17,8 @@ function GridCards(props) {
     movie_lang,
   } = props;
   const POSTER_SIZE = "w154";
+  
+
 
   const handleclickNominate = () => {
     const movie = {
@@ -26,9 +28,9 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
-
+   
     axios
-      .post("http://localhost:5000/movie/nominate/check", movie, {
+      .post("http://localhost:5000/movie/nominate/checkfor5", movie, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -38,6 +40,7 @@ function GridCards(props) {
         if (res.data.error)
           M.toast({ html: res.data.error, classes: "#c62828 red darken-3" });
         else {
+         
           axios
             .post("http://localhost:5000/movie/nominate", movie, {
               headers: {
@@ -52,7 +55,7 @@ function GridCards(props) {
                   html: res.data.error,
                   classes: "#c62828 red darken-3",
                 });
-                // <Alert severity="error">This is an error alert — check it out!</Alert>
+               
               } else {
                 M.toast({
                   html: res.data.message,
@@ -65,6 +68,10 @@ function GridCards(props) {
       })
       .catch((err) => console.log(err));
   };
+
+  
+  
+
 
   if (actor) {
     return (
@@ -90,8 +97,9 @@ function GridCards(props) {
             />
             {/* <p>{movieName}</p> */}
           </Link>
-          {/* {nominated?<button onClick={handleclickRomoveNominate}>Remove Nomination</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
+          {/* {isNominated?<button onClick={handleclickRomoveNominate}>Nominated</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
           <button onClick={handleclickNominate}>Nominate</button>
+          
         </div>
       </Col>
     );

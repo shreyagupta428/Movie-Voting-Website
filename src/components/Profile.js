@@ -55,7 +55,7 @@ const Profile = () => {
 
   return (
    <React.Fragment>
-   <div style={{maxWidth:"840px",margin:"2px auto"}}>
+   <div style={{maxWidth:"800px",margin:"2px auto"}}>
            <div style={{
               margin:"15px 0px",
                borderBottom:"1px solid white"

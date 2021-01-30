@@ -3,36 +3,36 @@ const router=express.Router()
 const mongoose=require('mongoose')
 const requireLogin= require('../middleware/requireLogin')
 let Movie=require('../models/movie')
+let BlackListMovies=require('../models/BlackListMovie')
 
 //route to check if number of nominations made by user is greater than 5 or not
-router.post("/nominate/check",requireLogin,(req,res)=>{
+router.post("/nominate/checkfor5",requireLogin,(req,res)=>{
    var c=0,d=-1;
    Movie.find()
    .then(movies=>{
    
-    movies.map((async movie=>{
-        //console.log("movvvvv",movie.nominatedby)
-        movie.nominatedby.map(async  x=>{
-            if(JSON.stringify(x)===JSON.stringify(req.user._id))
-             c++;
-            if(c>4)
-            d=0;
-            
-        })
-    })) 
-    
-    if(d==0)
-    {
-        return res.json({error:"You cannot nominate more than 5 movies"})  
-       
-    }
-    else
-    {
-        return res.json({message:"You can make nomination"})    
-    } 
+        movies.map((async movie=>{
+            //console.log("movvvvv",movie.nominatedby)
+            movie.nominatedby.map(async  x=>{
+                if(JSON.stringify(x)===JSON.stringify(req.user._id))
+                c++;
+                if(c>4)
+                d=0; 
+            })
+        }))  
+        if(d==0)
+        {
+            return res.json({error:"You cannot nominate more than 5 movies"})   
+        }
+        else
+        {
+            return res.json({message:"You can make nomination"})    
+        }
+         
    })
 
 })
+
 
 
 //route to make nomination
@@ -127,6 +127,63 @@ router.post('/remove',requireLogin, (req,res)=>{
                .catch(err=>console.log(err))
               }
 })
+})
+
+
+
+//Route for blacklisting
+router.post("/blacklist",requireLogin,(req,res)=>{
+   const {movieId}=req.body;
+
+   Movie.findOne({movieId},(err,savedMovie)=>{
+       if(err)
+       console.log(err)
+      else{
+        
+        //if the movie admin wants to blacklist is not in database
+        if(savedMovie==null)
+        {
+            const blacklistmovie=new BlackListMovies({
+                movieId,
+                nominatedby:[]
+        
+            })
+            blacklistmovie.save()
+            .then(result=> res.json({message:"Movie Blacklisted Successfully"}))
+            .catch(err=>console.log(err))
+
+        }
+        else{
+
+            const blacklistmovie=new BlackListMovies({
+                movieId,
+                nominatedby:savedMovie.nominatedby
+        
+            })
+            blacklistmovie.save()
+            .then(result=> res.json({message:"Movie Blacklisted Successfully"}))
+            .catch(err=>console.log(err))
+             
+            //deleting the blacklisted movie from database
+            savedMovie.delete()
+            .then(result=>console.log("Movie deleted from database"))
+            .catch(err=>console.log(err))
+           
+        }
+        
+      }
+      
+     
+   })
+   
+   
+})
+
+//route to get list of all blacklisted movies
+router.get("/blacklistedmovies",requireLogin,(req,res)=>{
+  BlackListMovies.find()
+  .then(movies=>res.json({movies}))
+  .catch(err=>console.log(err))
 })
 
 module.exports=router
