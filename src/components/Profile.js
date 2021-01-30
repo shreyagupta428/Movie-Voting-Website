@@ -31,7 +31,10 @@ const Profile = () => {
     }
   }, []);
      const remove=(movie)=>{
+       const ID=movie.movieId;
        console.log("remove");
+       let newmovie = mymovies.filter((movie) => movie.movieId !== ID);
+    setMyMovies(newmovie);
      axios
       .post("http://localhost:5000/movie/remove", movie, {
         headers: {
@@ -40,6 +43,7 @@ const Profile = () => {
         },
       })
     .then(res=>{
+     
       M.toast({
                   html: res.data.message,
                   classes: "#43a047 green darken-1",
