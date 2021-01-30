@@ -7,17 +7,21 @@ import { Link } from "react-router-dom";
 
 function GridCards(props) {
   let {
-    actor,
-    key,
     image,
     movieId,
     movieName,
-    characterName,
     movie_overview,
     movie_lang,
+    mymovies,
+    setMyMovies,
   } = props;
-  // console.log(props);
-  const POSTER_SIZE = "w154";
+  const [isNominated, setIsNominated] = useState(false);
+
+  useEffect(() => {
+    mymovies.forEach((item) => {
+      if (item.movieId == movieId) setIsNominated(true);
+    });
+  }, [mymovies]);
 
   const handleclickNominate = () => {
     const movie = {
@@ -58,6 +62,12 @@ function GridCards(props) {
                   html: res.data.message,
                   classes: "#43a047 green darken-1",
                 });
+                let newMymovies = mymovies;
+                newMymovies.push(movie);
+                setMyMovies(newMymovies);
+                mymovies.forEach((item) => {
+                  if (item.movieId == movieId) setIsNominated(true);
+                });
               }
             })
             .catch((err) => console.log(err));
@@ -66,34 +76,26 @@ function GridCards(props) {
       .catch((err) => console.log(err));
   };
 
-  // return (
-  //   <Col key={key} lg={6} md={8} xs={24}>
-  //     <div style={{ position: "relative" }}>
-  //       <Link to={`/movie/${movieId}`}>
-  //         <img
-  //           style={{ width: "100%", height: "320px" }}
-  //           alt={movieName}
-  //           src={image}
-  //         />
-  //       </Link>
-  //       <button onClick={handleclickNominate}>Nominate</button>
-  //     </div>
-  //   </Col>
-  // );
   return (
     <div className='row'>
       <div className='card'>
         <div className='card-image'>
           <img src={image} alt={movieName} />
           <span className='card-title'>{movieName}</span>
-          <a
-            className='btn-floating halfway-fab waves-effect waves-light red'
-            onClick={handleclickNominate}
-          >
-            <i className='material-icons'>add</i>
-          </a>
+          {isNominated ? (
+            <a className='btn-floating halfway-fab waves-effect waves-light green'>
+              <i className='material-icons'>done</i>
+            </a>
+          ) : (
+            <a
+              className='btn-floating halfway-fab waves-effect waves-light blue'
+              onClick={handleclickNominate}
+            >
+              <i className='material-icons'>add</i>
+            </a>
+          )}
         </div>
-        <div className='card-content'>
+        <div className='card-content' style={{ color: `#ffffff !important` }}>
           <p>
             {movie_overview.length > 150
               ? `${movie_overview.substring(0, 150)}...`

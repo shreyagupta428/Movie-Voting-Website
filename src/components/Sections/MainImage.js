@@ -4,7 +4,7 @@ import { Typography } from "antd";
 const { Title } = Typography;
 
 function MainImage(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <div
       style={{
@@ -28,7 +28,7 @@ function MainImage(props) {
           <Title style={{ color: "white" }} level={2}>
             {props.title}
           </Title>
-          <p style={{ color: "white", fontSize: "1rem" }}>
+          <p style={{ color: "white !important", fontSize: "1rem" }}>
             {props.text.length > 300
               ? `${props.text.substring(0, 200)}...`
               : props.text}

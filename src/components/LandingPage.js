@@ -21,6 +21,7 @@ function LandingPage(props) {
   const [MainMovieImage, setMainMovieImage] = useState(null);
   const [mymovies, setMyMovies] = useState([]);
   const [blacklistedMovies, setBlacklistedmovies] = useState([]);
+  // console.log(mymovies);
 
   useEffect(() => {
     axios
@@ -43,7 +44,7 @@ function LandingPage(props) {
         },
       })
       .then((res) => {
-        console.log(res.data.movies);
+        // console.log(res.data.movies);
         setBlacklistedmovies(res.data.movies);
       });
   }, []);
@@ -57,7 +58,7 @@ function LandingPage(props) {
     axios
       .get(uri)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMovies([...res.data.results]);
         setMainMovieImage(res.data.results[0]);
       })
@@ -112,6 +113,9 @@ function LandingPage(props) {
                   movie_overview={movie.overview}
                   movie_lang={movie.original_language}
                   movie_releasedate={movies.release_date}
+                  mymovies={mymovies}
+                  setMyMovies={setMyMovies}
+                  movie={movie}
                 />
               </React.Fragment>
             ))}
