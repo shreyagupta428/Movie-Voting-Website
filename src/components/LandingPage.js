@@ -9,7 +9,8 @@ import {
 } from "../constants/config";
 import MainImage from "./Sections/MainImage";
 import GridCard from "./Sections/GridCards";
-import { MDBCol, MDBIcon } from "mdbreact";
+import { MDBCol } from "mdbreact";
+import "../LandingPage.css";
 
 const { Title } = Typography;
 
@@ -28,13 +29,13 @@ function LandingPage(props) {
       .then((response) => response.json())
       .then((data) => {
         setMovies([...data.results]);
-        setMainMovieImage(data.results[0] || MainMovieImage);
+        setMainMovieImage(data.results[0]);
       })
       .catch((err) => console.log(err));
   }, [search]);
 
   return (
-    <div style={{ width: "100%", margin: "0" }}>
+    <section>
       {MainMovieImage && (
         <MainImage
           image={`${IMAGE_BASE_URL}${IMAGE_SIZE}${MainMovieImage.backdrop_path}`}
@@ -43,8 +44,15 @@ function LandingPage(props) {
         />
       )}
 
-      {/* search bar   */}
-      <MDBCol md='6'>
+      <section className='movies section'>
+        <div
+          style={{
+            marginBottom: `4rem`,
+            display: `flex`,
+            justifyContent: `center`,
+          }}
+        >
+          <MDBCol md='6'>
             <input
               className='form-control my-0 py-1'
               type='text'
@@ -56,32 +64,32 @@ function LandingPage(props) {
                 setSearch(e.target.value);
               }}
             />
-      </MDBCol>
+          </MDBCol>
+        </div>
 
-      <div style={{ width: "20%", margin: "1rem auto" }}>
-        <Title level={2}> Movies by latest </Title>
-        <hr />
-        <Row gutter={[16, 16]}>
-          {movies.map((movie, index) => (
-            <React.Fragment key={index}>
-              <GridCard
-                image={
-                  movie.poster_path
-                    ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}`
-                    : null
-                }
-                movieId={movie.id}
-                movieName={movie.original_title}
-                movie_overview={movie.overview}
-                movie_lang={movie.original_language}
-                movie_releasedate={movies.release_date}
-              />
-            </React.Fragment>
-          ))}
-        </Row>
-        <br />
-      </div>
-    </div>
+        <div style={{ margin: "1rem auto" }}>
+          <div className='section-center'>
+            {movies.map((movie, index) => (
+              <React.Fragment key={index}>
+                <GridCard
+                  image={
+                    movie.poster_path
+                      ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}`
+                      : null
+                  }
+                  movieId={movie.id}
+                  movieName={movie.original_title}
+                  movie_overview={movie.overview}
+                  movie_lang={movie.original_language}
+                  movie_releasedate={movies.release_date}
+                />
+              </React.Fragment>
+            ))}
+          </div>
+          <br />
+        </div>
+      </section>
+    </section>
   );
 }
 export default LandingPage;

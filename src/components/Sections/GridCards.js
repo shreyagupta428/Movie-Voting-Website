@@ -16,6 +16,7 @@ function GridCards(props) {
     movie_overview,
     movie_lang,
   } = props;
+  // console.log(props);
   const POSTER_SIZE = "w154";
 
   const handleclickNominate = () => {
@@ -66,36 +67,43 @@ function GridCards(props) {
       .catch((err) => console.log(err));
   };
 
-  if (actor) {
-    return (
-      <Col key={key} lg={6} md={8} xs={200}>
-        <div style={{ position: "relative" }}>
-          <img
-            style={{ width: "100%", height: "320px" }}
-            alt={characterName}
-            src={`${IMAGE_BASE_URL}${POSTER_SIZE}${image}`}
-          />
+  // return (
+  //   <Col key={key} lg={6} md={8} xs={24}>
+  //     <div style={{ position: "relative" }}>
+  //       <Link to={`/movie/${movieId}`}>
+  //         <img
+  //           style={{ width: "100%", height: "320px" }}
+  //           alt={movieName}
+  //           src={image}
+  //         />
+  //       </Link>
+  //       <button onClick={handleclickNominate}>Nominate</button>
+  //     </div>
+  //   </Col>
+  // );
+  return (
+    <div className='row'>
+      <div className='card'>
+        <div className='card-image'>
+          <img src={image} alt={movieName} />
+          <span className='card-title'>{movieName}</span>
+          <a
+            className='btn-floating halfway-fab waves-effect waves-light red'
+            onClick={handleclickNominate}
+          >
+            <i className='material-icons'>add</i>
+          </a>
         </div>
-      </Col>
-    );
-  } else {
-    return (
-      <Col key={key} lg={6} md={8} xs={24}>
-        <div style={{ position: "relative" }}>
-        <Link to={`/movie/${movieId}`}>
-            <img
-              style={{ width: "100%", height: "320px" }}
-              alt={movieName}
-              src={image}
-            />
-            {/* <p>{movieName}</p> */}
-          </Link>
-          {/* {nominated?<button onClick={handleclickRomoveNominate}>Remove Nomination</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
-          <button onClick={handleclickNominate}>Nominate</button>
+        <div className='card-content'>
+          <p>
+            {movie_overview.length > 150
+              ? `${movie_overview.substring(0, 150)}...`
+              : movie_overview}
+          </p>
         </div>
-      </Col>
-    );
-  }
+      </div>
+    </div>
+  );
 }
 
 export default GridCards;
