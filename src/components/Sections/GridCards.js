@@ -20,7 +20,7 @@ function GridCards(props) {
 
   const [isNominated, setIsNominated] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
-  const isAdmin = true;
+  const isAdmin = state ? state.isAdmin : false;
 
   useEffect(() => {
     mymovies.forEach((item) => {
@@ -63,7 +63,6 @@ function GridCards(props) {
       .catch((err) => console.log(err));
   };
 
-
   const handleclickNominate = () => {
     const movie = {
       title: movieName,
@@ -72,7 +71,7 @@ function GridCards(props) {
       movieId: movieId,
       image: image,
     };
-   
+
     axios
       .post("http://localhost:5000/movie/nominate/checkfor5", movie, {
         headers: {
@@ -84,7 +83,6 @@ function GridCards(props) {
         if (res.data.error)
           M.toast({ html: res.data.error, classes: "#c62828 red darken-3" });
         else {
-         
           axios
             .post("http://localhost:5000/movie/nominate", movie, {
               headers: {
