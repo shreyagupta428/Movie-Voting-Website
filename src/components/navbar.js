@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../App";
+import logo from "../logo1.png";
 
 const NavBar = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -66,7 +67,10 @@ const NavBar = () => {
     <nav>
       <div>
         <Link className='linked brand-logo left' to='/home'>
-          Movie Voting Website
+          <div style={{ marginLeft: 28, marginTop: -10 }}>
+            <img src={logo} style={{ height: "90%" }} />
+            {/* <h3 style={{fontFamily: 'Lobster'}}>Movie Voting Website</h3> */}
+          </div>
         </Link>
         <ul id='nav-mobile' className='right'>
           {renderList()}

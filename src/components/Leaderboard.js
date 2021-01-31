@@ -26,7 +26,7 @@ const Leaderboard = () => {
           textAlign: `center`,
         }}
       >
-        Leaderboard
+        Leaderboard <i class='fas fa-trophy'></i>
       </h1>
       {movies.map((item) => {
         return <LeaderboardMovie item={item} />;

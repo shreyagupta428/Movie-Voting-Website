@@ -15,11 +15,35 @@ h2 {
   margin-top: 30px;
 }
 .auth-card {
-  padding: 20px;
   text-align: center;
-  max-width: 450px;
-  max-height: 500px;
+  max-width: 400px;
   margin: 10px auto;
+  /* margin-left: 300px; */
+}
+.profile {
+  padding: 20px;
+  width: 30vw;
+  max-width: 20%;
+  gap: 4rem;
+  margin: 10px auto;
+  padding-bottom: 6rem;
+  padding-top: 3rem;
+  /*box-sizing: unset;*/
+  border-color: grey;
+  border-width: 100px;
+  border-radius: 3rem;
+  transition: linear;
+  transform: skew();
+}
+
+.profilename {
+  color: orangered;
+  text-decoration-color: violet;
+}
+.profo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 .input-field input[type="text"]:focus {
   border-bottom: 1px solid rgb(8, 93, 252) !important;
