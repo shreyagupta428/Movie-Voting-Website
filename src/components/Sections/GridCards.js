@@ -1,23 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Col } from "antd";
 import { IMAGE_BASE_URL } from "../../constants/config";
 import axios from "axios";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../App";
 
 function GridCards(props) {
   let {
-    actor,
-    key,
     image,
     movieId,
     movieName,
-    characterName,
     movie_overview,
     movie_lang,
+    mymovies,
+    blacklistedMovies,
   } = props;
-  const POSTER_SIZE = "w154";
-  
+  const { state, dispatch } = useContext(UserContext);
+
+  const [isNominated, setIsNominated] = useState(false);
+  const [isBlacklisted, setIsBlacklisted] = useState(false);
+  const isAdmin = true;
+
+  useEffect(() => {
+    mymovies.forEach((item) => {
+      if (item.movieId == movieId) setIsNominated(true);
+    });
+    blacklistedMovies.forEach((item) => {
+      if (item.movieId == movieId) setIsBlacklisted(true);
+    });
+  }, [mymovies, blacklistedMovies]);
+
+  const handleblacklist = () => {
+    const movie = {
+      title: movieName,
+      language: movie_lang,
+      overview: movie_overview,
+      movieId: movieId,
+      image: image,
+    };
+    axios
+      .post("http://localhost:5000/movie/blacklist", movie, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      })
+      .then((res) => {
+        if (res.data.error) {
+          M.toast({
+            html: res.data.error,
+            classes: "#c62828 red darken-3",
+          });
+        } else {
+          M.toast({
+            html: res.data.message,
+            classes: "#43a047 green darken-1",
+          });
+          setIsBlacklisted(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
 
   const handleclickNominate = () => {
@@ -55,12 +99,12 @@ function GridCards(props) {
                   html: res.data.error,
                   classes: "#c62828 red darken-3",
                 });
-               
               } else {
                 M.toast({
                   html: res.data.message,
                   classes: "#43a047 green darken-1",
                 });
+                setIsNominated(true);
               }
             })
             .catch((err) => console.log(err));
@@ -68,42 +112,48 @@ function GridCards(props) {
       })
       .catch((err) => console.log(err));
   };
-
-  
-  
-
-
-  if (actor) {
-    return (
-      <Col key={key} lg={6} md={8} xs={200}>
-        <div style={{ position: "relative" }}>
-          <img
-            style={{ width: "100%", height: "320px" }}
-            alt={characterName}
-            src={`${IMAGE_BASE_URL}${POSTER_SIZE}${image}`}
-          />
-        </div>
-      </Col>
-    );
-  } else {
-    return (
-      <Col key={key} lg={6} md={8} xs={24}>
-        <div style={{ position: "relative" }}>
-        <Link to={`/movie/${movieId}`}>
-            <img
-              style={{ width: "100%", height: "320px" }}
-              alt={movieName}
-              src={image}
-            />
-            {/* <p>{movieName}</p> */}
+  return (
+    <div className='row'>
+      <div className='card'>
+        <div className='card-image'>
+          <Link to={`/movie/${movieId}`}>
+            <img src={image} alt={movieName} />
           </Link>
-          {/* {isNominated?<button onClick={handleclickRomoveNominate}>Nominated</button>:<button onClick={handleclickNominate}>Nominate</button>} */}
-          <button onClick={handleclickNominate}>Nominate</button>
-          
+          <span className='card-title'>{movieName}</span>
+          {isBlacklisted ? (
+            <a className='btn-floating halfway-fab waves-effect waves-light red'>
+              <i className='material-icons'>block</i>
+            </a>
+          ) : isNominated ? (
+            <a className='btn-floating halfway-fab waves-effect waves-light green'>
+              <i className='material-icons'>done</i>
+            </a>
+          ) : (
+            <a
+              className='btn-floating halfway-fab waves-effect waves-light blue'
+              onClick={handleclickNominate}
+            >
+              <i className='material-icons'>add</i>
+            </a>
+          )}
         </div>
-      </Col>
-    );
-  }
+        <div className='card-content' style={{ color: `#ffffff !important` }}>
+          <p>
+            {movie_overview.length > 150
+              ? `${movie_overview.substring(0, 150)}...`
+              : movie_overview}
+          </p>
+          {isAdmin && !isBlacklisted && (
+            <div className='card-action' style={{ float: `center` }}>
+              <button className='btn red' onClick={handleblacklist}>
+                Blacklist
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default GridCards;

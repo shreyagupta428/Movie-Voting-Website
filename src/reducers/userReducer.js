@@ -7,12 +7,11 @@ export const reducer = (state, action) => {
   if (action.type === "CLEAR") {
     return null;
   }
-  if(action.type=="UPDATE"){
-        return {
-            ...state,
-            nominatedby:action.payload.nominatedby,
-            
-        }
-    }
+  if (action.type == "UPDATE") {
+    return {
+      ...state,
+      nominatedby: action.payload.nominatedby,
+    };
+  }
   return state;
 };
