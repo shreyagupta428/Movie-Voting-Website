@@ -60,7 +60,7 @@ const SignUp = () => {
   };
   return (
     <div className='mycard'>
-      <div className='card auth-card  input-field'>
+      <div className='card auth-card input-field'>
         <h2>Sign Up</h2>
         <form>
           <input

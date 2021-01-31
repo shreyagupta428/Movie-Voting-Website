@@ -47,9 +47,9 @@ function App() {
 //   const {state,dispatch} = useContext(UserContext)
 //   return(
 //      <div>
-   
+
 //        <BrowserRouter>
-//        <NavBar />    
+//        <NavBar />
 //          <Route exact path="/signin" component={SignIn}/>
 //        <Route exact path="/" component={SignUp}/>
 //        <Route exact path="/profile" component={Profile}/>
@@ -64,9 +64,9 @@ function App() {
 //   return (
 //     <UserContext.Provider value={{state,dispatch}}>
 //     <BrowserRouter>
-      
+
 //       <Routing />
-      
+
 //     </BrowserRouter>
 //     </UserContext.Provider>
 //   );
