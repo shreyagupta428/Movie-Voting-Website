@@ -1,0 +1,30 @@
+@media screen and (min-width: 872px) {
+  .section-center {
+    width: 95vw;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.section-center {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: 1170px;
+  display: grid;
+  gap: 3rem 2rem;
+  justify-items: center;
+}
+
+@media screen and (min-width: 1200px) {
+  .section-center {
+    width: 95vw;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.card {
+  max-width: 350px;
+}
+
+body {
+  color: black;
+}

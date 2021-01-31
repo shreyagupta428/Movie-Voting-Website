@@ -17,14 +17,6 @@ const movieSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    // release_date:{
-    //     type:String,
-    //     required:true  
-    // },
-    // vote_avg:{
-    //     type:Number,
-    //     required:true  
-    // },
     movieId:{
         type:String,
         required:true

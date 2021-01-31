@@ -6,7 +6,7 @@ import M from "materialize-css";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../App";
 import '../App.css';
-
+ 
 const Profile = () => {
   const { state, dispatch } = useContext(UserContext);
   const [search, setSearch] = useState(false);
@@ -52,7 +52,7 @@ const Profile = () => {
     .catch((err) => console.log(err));
      }
     
-
+ 
   return (
    <React.Fragment>
    <div style={{maxWidth:"600px",margin:"2px auto"}}>
@@ -61,7 +61,7 @@ const Profile = () => {
                borderBottom:"1px solid white"
               
            }}>
-
+ 
          
            
                <div>
@@ -70,7 +70,7 @@ const Profile = () => {
                    <div style={{display:"flex",justifyContent:"space-between",width:"108%"}}>
                        <h3 className="profilename">You Have Nominated {mymovies.length} Movies</h3>
                    </div>
-
+ 
               
            </div>
            </div>
@@ -99,8 +99,8 @@ const Profile = () => {
     </div>
   </div>
          </section>  
-
-
+ 
+ 
         )
       })}
     </main>
@@ -109,5 +109,5 @@ const Profile = () => {
     
   );
 };
-
+ 
 export default Profile;
