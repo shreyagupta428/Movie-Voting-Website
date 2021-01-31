@@ -20,7 +20,7 @@ function GridCards(props) {
 
   const [isNominated, setIsNominated] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
-  const isAdmin = true;
+  const isAdmin = state ? state.isAdmin : false;
 
   useEffect(() => {
     mymovies.forEach((item) => {
