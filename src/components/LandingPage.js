@@ -13,15 +13,42 @@ import { MDBCol } from "mdbreact";
 import "../LandingPage.css";
 import axios from "axios";
 
+
 const { Title } = Typography;
 
 function LandingPage(props) {
+  
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   const [MainMovieImage, setMainMovieImage] = useState(null);
   const [mymovies, setMyMovies] = useState([]);
   const [blacklistedMovies, setBlacklistedmovies] = useState([]);
 
+  useEffect(()=>{
+    axios
+        .get("http://localhost:5000/movie/mypost", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        })
+        .then((res) => {
+          setMyMovies(res.data.myPost);
+        })
+        .catch((err) => console.log(err));
+      
+    axios.get("http://localhost:5000/movie/blacklistedmovies",{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      }
+    })
+    .then(res=>{
+      console.log(res.data.movies)
+      setBlacklistedmovies(res.data.movies)
+    })
+   
+  },[])
   useEffect(() => {
     axios
       .get("http://localhost:5000/movie/mypost", {
@@ -63,7 +90,8 @@ function LandingPage(props) {
       })
       .catch((err) => console.log(err));
   }, [search]);
-
+ 
+  
   return (
     <section>
       {MainMovieImage && (
