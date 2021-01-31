@@ -17,7 +17,9 @@ Users can log in using the email id and password.
 ![alt text](https://i.ibb.co/2YB7Xzy/Whats-App-Image-2021-01-31-at-9-11-57-PM.jpg)
 
 ### 3. Homepage:
+
 ![alt text](https://i.ibb.co/54n2rrp/Whats-App-Image-2021-01-31-at-9-14-05-PM.jpg)
+
 * The home page displays various movies, and a user can nominate his/her favorite movie by clicking on the nominate button.
 * It also contains a search bar where users can easily search movies.
 * User can nominate a movie by clicking on the blue plus button associated with each movie card.
@@ -28,7 +30,7 @@ Users can log in using the email id and password.
 #### Admin Features:
 * Admins have the authority to Blacklist a movie, which throws that blacklisted movie out of the race to appear on the leaderboard. Now this movie can no longer be nominated, and if it were nominated already by any user before then, it would be removed automatically.
 * If you are an admin, you will see a button on the Movie Card to blacklist that particular movie.
-* ![alt text](https://i.ibb.co/3Y1k4Mk/Whats-App-Image-2021-01-31-at-9-14-32-PM.jpg)
+![alt text](https://i.ibb.co/3Y1k4Mk/Whats-App-Image-2021-01-31-at-9-14-32-PM.jpg)
 
 ### 4. Movie Details Page:
 * Users can find a detailed description of movies such as cast, rating, overview, release date, and genre.
