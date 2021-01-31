@@ -18,7 +18,7 @@ function GridCards(props) {
   } = props;
   const POSTER_SIZE = "w154";
 
-  const handleclickNominate = () => {
+    const handleclickNominate = () => {
     const movie = {
       title: movieName,
       language: movie_lang,
@@ -31,7 +31,7 @@ function GridCards(props) {
       .post("http://localhost:5000/movie/nominate/check", movie, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
+           Authorization: "Bearer " + localStorage.getItem("jwt"),
         },
       })
       .then((res) => {
