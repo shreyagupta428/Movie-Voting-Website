@@ -21,7 +21,6 @@ function LandingPage(props) {
   const [MainMovieImage, setMainMovieImage] = useState(null);
   const [mymovies, setMyMovies] = useState([]);
   const [blacklistedMovies, setBlacklistedmovies] = useState([]);
-  // console.log(mymovies);
 
   useEffect(() => {
     axios
@@ -114,8 +113,7 @@ function LandingPage(props) {
                   movie_lang={movie.original_language}
                   movie_releasedate={movies.release_date}
                   mymovies={mymovies}
-                  setMyMovies={setMyMovies}
-                  movie={movie}
+                  blacklistedMovies={blacklistedMovies}
                 />
               </React.Fragment>
             ))}
